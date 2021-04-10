@@ -1,0 +1,35 @@
+.container{
+  margin: 0 10px;
+}
+.carosel{
+  height: 300px;
+}
+
+.carosel a {
+  display: block;
+  height: 300px;
+}
+
+.carosel a > img {
+  height: 100%
+}
+
+.products {
+  display: flex;
+  margin: 10px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin: 10px 0;
+}
+.products center {
+  height: 100%;
+}
+.products center > img {
+  height: 100%;
+}
+
+.card{
+  width: 400px;
+  height: 200px;
+  margin: 0 5px;
+}
