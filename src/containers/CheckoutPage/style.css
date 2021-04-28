@@ -1,0 +1,48 @@
+.checkoutContainer{
+  margin-top: 10px;
+  flex: 1;
+}
+.checkoutStep{
+  background: #fff;
+  font-size: 15px;
+  margin-bottom: 10px;
+  border-radius: 2px;
+  box-sizing: border-box;
+  box-shadow: 0px 1px 2px 1px #c6c6c6;
+}
+.stepNumber{
+  color: #5d6269;
+  padding: 1px 5px;
+  background: #f1f3f6;
+  margin-right: 20px;
+  border-radius: 2px;
+}
+.checkoutHeader{
+  padding: 15px;
+}
+.active{
+  background: #2774f0;
+}
+.logedInId{
+  padding-left: 52px;
+  position: relative;
+  top: -15px;
+}
+.AddInputContainer{
+  margin: 0 10px;
+  flex: 50%;
+}
+.addressContainer {
+  padding: 10px;
+}
+.addressinfo{
+  flex: 1
+}
+@media (max-width: 800px) {
+  .AddInputContainer {
+    flex: 100%;
+  }
+  .inputRowContainer{
+    flex-wrap: wrap;
+  }
+}

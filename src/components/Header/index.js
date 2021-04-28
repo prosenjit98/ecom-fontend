@@ -149,7 +149,8 @@ const Header = (props) => {
           </a>
         </div>
         <div style={{
-          padding: '0 10px'
+          padding: '0 10px',
+          flex: 2
         }}>
           <div className="searchInputContainer">
             <input
@@ -182,7 +183,7 @@ const Header = (props) => {
             ]}
           />
           <div>
-            <a className="cart">
+            <a className="cart" href="/cart">
               <IoIosCart />
               <span style={{ margin: '0 10px' }}>Cart</span>
             </a>

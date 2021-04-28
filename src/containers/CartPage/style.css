@@ -55,3 +55,15 @@
   margin: 0 5px;
   text-align: center;
 }
+.cartCheckoutbtn{
+  width: 100%;
+  display: flex;
+  background: #fff;
+  justify-content: flex-end;
+  box-shadow: 0 0 10px 10px #eee;
+  padding: 10px 0;
+  box-sizing: border-box;
+}
+.cartCheckoutbtn > div {
+  width: 250px;
+}
