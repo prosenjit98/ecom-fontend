@@ -1,39 +1,60 @@
-import React, { useState } from 'react'
-import { useDispatch } from 'react-redux';
+import React, { useState, useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux';
 import { addUserAddress } from '../../actions/user.actions'
 import { MaterialButton, MaterialInput } from '../../components/MaterialUI';
 
 const AddressForm = (props) => {
-  const [name, setName] = useState('');
-  const [mobileNumber, setMobileNumber] = useState('');
-  const [pincode, setPincode] = useState('');
-  const [locality, setLocality] = useState('');
-  const [address, setAddress] = useState('');
-  const [cityDestrictTown, setCityDestrictTown] = useState('');
-  const [state, setState] = useState('');
-  const [landmark, setLandmark] = useState('');
-  const [alternativePhone, setAlternativePhone] = useState('');
-  const [addressType, setAddressType] = useState('');
+  const user = useSelector(state => state.user);
+  const { initialData } = props;
+  const [name, setName] = useState(initialData ? initialData.name : '');
+  const [mobileNumber, setMobileNumber] = useState(initialData ? initialData.mobileNumber : '');
+  const [pincode, setPincode] = useState(initialData ? initialData.pincode : '');
+  const [locality, setLocality] = useState(initialData ? initialData.locality : '');
+  const [address, setAddress] = useState(initialData ? initialData.address : '');
+  const [cityDestrictTown, setCityDestrictTown] = useState(initialData ? initialData.cityDestrictTown : '');
+  const [state, setState] = useState(initialData ? initialData.state : '');
+  const [landmark, setLandmark] = useState(initialData ? initialData.landmark : '');
+  const [alternativePhone, setAlternativePhone] = useState(initialData ? initialData.alternativePhone : '');
+  const [addressType, setAddressType] = useState(initialData ? initialData.addressType : '');
+  const [id, setId] = useState(initialData ? initialData._id : '')
+  const [submitFlag, setSetSubmitFlag] = useState(false);
 
   const dispatch = useDispatch();
 
   const onAddressSubmit = () => {
-    console.log("000000000000000");
     const payload = {
       address: { name, mobileNumber, pincode, locality, address, cityDestrictTown, state, landmark, alternativePhone, addressType }
     }
-    dispatch(addUserAddress(payload))
+    if (id) {
+      payload.address._id = id
+    }
+    dispatch(addUserAddress(payload));
+    setSetSubmitFlag(true);
   }
+
+  useEffect(() => {
+    if (submitFlag) {
+      let _address = {}
+      if (id) {
+        _address = {
+          _id: id, name, mobileNumber, pincode, locality, address, cityDestrictTown, state, landmark, alternativePhone, addressType
+        }
+      } else {
+        _address = user.address.slice(user.address.length - 1)[0]
+      }
+      props.onSubmitForm(_address);
+    }
+  }, [user.address])
 
 
   return (
-    <div className="checkoutStep" style={{ background: '#f5faff' }} >
-      <div className="checkoutHeader">
+    <div className="checkoutStep" style={{ background: `${props.withoutLayout ? 'none' : '#f5faff'}`, boxShadow: `${props.withoutLayout ? 'none' : 'inherit'}` }} >
+      {!props.withoutLayout && <div className="checkoutHeader">
         <div>
           <span className="stepNumber">+</span>
           <span className="stepTitle">{"ADD NEW ADDRESS"}</span>
         </div>
-      </div>
+      </div>}
       <div style={{ padding: '0 60px', paddingBottom: "20px", boxSizing: 'border-box' }}>
         <div className="flexRow inputRowContainer">
           <div className="AddInputContainer">
@@ -112,7 +133,7 @@ const AddressForm = (props) => {
           <label>Address Type</label>
           <div className="flexRow inputRowContainer">
             <div>
-              <input type="radio" name="addressType" value="home" onClick={() => setAddressType('home')} />
+              <input type="radio" name="addressType" checked="checked" value="home" onClick={() => setAddressType('home')} />
               <span>Home</span>
             </div>
             <div>
@@ -125,13 +146,13 @@ const AddressForm = (props) => {
           <MaterialButton
             title="SAVE AND DELIVER HERE"
             onClick={onAddressSubmit}
-            style={{ width: '250px', margin: '20px 0' }}
+            style={{ width: '250px', margin: '20px 5px' }}
           />
 
           <MaterialButton
             title="CANCEL"
             onClick={props.onClick}
-            style={{ width: '250px', margin: '20px 0' }}
+            style={{ width: '250px', margin: '20px 5px' }}
           />
         </div>
       </div>

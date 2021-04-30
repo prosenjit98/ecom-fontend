@@ -5,6 +5,7 @@ import Layout from '../../components/Layout'
 import { MaterialButton } from '../../components/MaterialUI'
 import Card from '../../UI/Card'
 import CartItem from './CartItem'
+import PriceDetails from '../../components/PriceDetails/PriceDetails'
 import './style.css'
 
 const CartPage = (props) => {
@@ -33,6 +34,21 @@ const CartPage = (props) => {
     const item = cart.cartItems[_id]
     dispatch(addToCard({ _id, name: item.name, price: item.price, img: item.img }, -1))
   }
+
+  if (props.onlyProductCart) {
+    return (
+      <>
+        {Object.keys(cartItems).map((key, index) =>
+          <CartItem
+            key={key}
+            cartItem={cartItems[key]}
+            onQtyDec={onQtyDec}
+            onQtyInc={onQtyInc}
+          />
+        )}
+      </>
+    )
+  }
   return (
     <Layout>
       <div className="cartContainer">
@@ -60,8 +76,17 @@ const CartPage = (props) => {
           </div>
 
         </Card>
-        <Card style={{ width: '380px' }} headerLeft={'Price'}>
-        </Card>
+        {/* <Card style={{ width: '380px' }} headerLeft={'Price'}>
+        </Card> */}
+        <PriceDetails
+          totalItem={Object.keys(cart.cartItems).reduce(function (qty, key) {
+            return qty + cart.cartItems[key].qty;
+          }, 0)}
+          totalPrice={Object.keys(cart.cartItems).reduce(((totalPrice, key) => {
+            const { price, qty } = cart.cartItems[key];
+            return totalPrice + price * qty
+          }), 0)}
+        />
       </div>
     </Layout>
   )
