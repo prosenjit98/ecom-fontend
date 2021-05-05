@@ -66,6 +66,25 @@
   align-items: flex-start; 
   padding: 5px 40px;
 }
+.orderConfirmation{
+  border: 1px solid #cecece;
+  box-shadow: 0 0 2px -2px grey;
+  height: auto;
+  background-color: #fff;
+  margin: 10px 0;
+  box-shadow: 0px 1px 2px 1px #c6c6c6;
+  border-radius: 2px;
+  display: flex;
+  align-items: center;
+  padding: 10px 20px;
+  justify-content: space-between;
+}
+.orderConfirm button{
+  margin: 10px 20px;
+}
+.font12{
+  font-size: 12px;
+}
 @media (max-width: 800px) {
   .AddInputContainer {
     flex: 100%;

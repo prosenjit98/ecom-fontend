@@ -47,7 +47,7 @@ const Header = (props) => {
         menus={[
           { label: 'My Profile', href: '', icon: null },
           { label: 'Flipkart Plus Zone', href: '', icon: null },
-          { label: 'Orders', href: '', icon: null },
+          { label: 'Orders', href: "", onClick: () => setLoginModal(true), icon: null },
           { label: 'Wishlist', href: '', icon: null },
           { label: 'Rewards', href: '', icon: null },
           { label: 'Gift Cards', href: '', icon: null },
@@ -73,7 +73,7 @@ const Header = (props) => {
         { label: 'My Profile', href: '', icon: null },
         { label: 'SuperCoin Zone', href: '', icon: null },
         { label: 'Flipkart Plus Zone', href: '', icon: null },
-        { label: 'Orders', href: '', icon: null },
+        { label: 'Orders', href: `/orders`, icon: null },
         { label: 'Wishlist', href: '', icon: null },
         { label: 'My Chats', href: '', icon: null },
         { label: 'Coupons', href: '', icon: null },

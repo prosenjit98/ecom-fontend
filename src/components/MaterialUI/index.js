@@ -67,9 +67,10 @@ const MaterialDropdown = props => {
         {props.firstMenu}
         <ul className="hearderDropdownMenu">
           {props.menus && props.menus.map((item, index) =>
-            <li key={index} ><a href={item.href} onClick={e => {
+            <li key={index} ><a href={`${item.href}`} onClick={e => {
               e.preventDefault();
               item.onClick && item.onClick()
+              if (item.href) { window.location.href = item.href }
             }}>{item.label}</a></li>)}
         </ul>
       </div>
@@ -83,4 +84,19 @@ const Anchor = (props) => {
   </button>
 }
 
-export { Modal, MaterialInput, MaterialDropdown, MaterialButton, Anchor }
+const Bread = props => {
+  return (
+    <div className="breed">
+      <ul>
+        {props.bread && props.bread.map((item, index) => (
+          <li key={index}>
+            <a href={item.href}>{item.name}</a>
+            {(props.bread.length - 1 !== index) && props.breadIcon}
+          </li>
+        ))}
+      </ul>
+    </div>
+  )
+}
+
+export { Modal, MaterialInput, MaterialDropdown, MaterialButton, Anchor, Bread }

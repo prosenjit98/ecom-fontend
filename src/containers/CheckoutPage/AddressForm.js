@@ -133,7 +133,7 @@ const AddressForm = (props) => {
           <label>Address Type</label>
           <div className="flexRow inputRowContainer">
             <div>
-              <input type="radio" name="addressType" checked="checked" value="home" onClick={() => setAddressType('home')} />
+              <input type="radio" name="addressType" defaultChecked="checked" value="home" onClick={() => setAddressType('home')} />
               <span>Home</span>
             </div>
             <div>

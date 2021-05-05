@@ -7,6 +7,7 @@ import './App.css';
 import CartPage from './containers/CartPage';
 import CheckoutPage from './containers/CheckoutPage';
 import HomePage from './containers/HomePage';
+import Orders from './containers/Orders';
 import ProductDetailsPage from './containers/ProductDetailsPage';
 import ProductListPage from './containers/ProductListPage';
 
@@ -28,6 +29,7 @@ function App() {
         <Switch>
           <Route path="/" exact component={HomePage} />
           <Route path="/cart" component={CartPage} />
+          <Route path="/orders" component={Orders} />
           <Route path="/checkout" component={CheckoutPage} />
           <Route path="/:productSlug/:productId/p" component={ProductDetailsPage} />
           <Route path="/:slug" component={ProductListPage} />

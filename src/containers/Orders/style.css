@@ -1,0 +1,22 @@
+.orderItemsContainer{
+  padding: 10px;
+}
+.orderImg{
+  width: 150px;
+  height: 150px;
+  text-align: center;
+}
+.orderImg > img{
+  max-width: 70%;
+  max-height: 100%;
+  object-fit: contain;
+}
+.orderItemsSubContainer{
+  display: flex;
+  flex: 1;
+  justify-content: space-between;
+}
+.orderContainer{
+  max-width: 1200px;
+  margin: 5px auto;
+}

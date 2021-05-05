@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { getUserAddress } from '../../actions'
+import { addUserOrder } from "../../actions/user.actions"
 import { getCartItem } from '../../actions/cart.actions'
 import Layout from '../../components/Layout'
 import AddressForm from './AddressForm'
@@ -9,6 +10,8 @@ import PriceDetails from '../../components/PriceDetails/PriceDetails'
 import './style.css'
 import Address from './Address'
 import CartPage from '../CartPage'
+import Card from '../../UI/Card'
+import { MaterialButton } from '../../components/MaterialUI'
 
 
 const CheckoutStep = (props) => {
@@ -35,6 +38,9 @@ const CheckoutPage = (props) => {
   const [confirmAddress, setConfirmAddress] = useState(false)
   const [selectedAddress, setSelectedAddress] = useState(null)
   const [orderSummary, setOderSummary] = useState(false)
+  const [orderConfirmation, setOrderConfirmation] = useState(false);
+  const [paymentOption, setPaymentOption] = useState(false);
+  const [confirmOrder, setConfirmOrder] = useState(false)
 
   const dispatch = useDispatch();
   const onAddressSubmit = (addr) => {
@@ -69,6 +75,31 @@ const CheckoutPage = (props) => {
     setAddress(updatedAddress)
   }
 
+  const userOrderConfirmation = () => {
+    setOrderConfirmation(true);
+    setOderSummary(false);
+    setPaymentOption(true)
+  }
+
+  const onConfirmOrder = () => {
+    const totalPrice = Object.keys(cart.cartItems).reduce(((totalPrice, key) => {
+      const { price, qty } = cart.cartItems[key];
+      return totalPrice + price * qty
+    }), 0)
+
+    const items = Object.keys(cart.cartItems).map(key => ({ productId: key, payablePrice: cart.cartItems[key].price, purchasedQty: cart.cartItems[key].qty }))
+
+    const payload = {
+      'addressId': selectedAddress._id,
+      totalAmount: totalPrice,
+      items: items,
+      paymentStatus: "pending"
+    }
+    console.log(payload)
+    dispatch(addUserOrder(payload))
+    setConfirmOrder(true)
+  }
+
   if (!user) return <div />
 
   return (
@@ -93,7 +124,7 @@ const CheckoutPage = (props) => {
             active={!confirmAddress && auth.authenticate}
             body={
               <>{
-                confirmAddress ? <div>{`${selectedAddress.address} - ${selectedAddress.pincode}`}</div>
+                auth.authenticate && (confirmAddress ? <div className="logedInId">{`${selectedAddress.address} - ${selectedAddress.pincode}`}</div>
                   : address.map(adr =>
                     <Address
                       adr={adr}
@@ -102,8 +133,8 @@ const CheckoutPage = (props) => {
                       confirmDeliveryAddress={confirmDeliveryAddress}
                       onAddressSubmit={onAddressSubmit}
                       key={adr._id}
-                    />
-                  )}
+                    />)
+                )}
 
               </>
             }
@@ -133,9 +164,28 @@ const CheckoutPage = (props) => {
               orderSummary && <CartPage onlyProductCart={true} />
             }
           />
+          {orderSummary &&
+            <div className='orderConfirmation'>
+              <p className="font12">Order Confimation email will be sent to
+            {' '}<strong>{auth.user.email}</strong> </p>
+              <MaterialButton title="CONTINUE"
+                style={{ width: '200px' }}
+                onClick={userOrderConfirmation} />
+            </div>
+          }
           <CheckoutStep
             stepNumber={4}
             title={'PAYMENT OPTIONS'}
+            active={paymentOption}
+            body={paymentOption && <div className="orderConfirm"><div className="flexRow addressContainer">
+              <input type="radio" name="paymentOption" value="cash_on_delivery" />
+              <div className="addressinfo">Cash on Delivery</div>
+            </div>
+              <MaterialButton title="CONFIRM ORDER"
+                style={{ width: '200px' }}
+                onClick={onConfirmOrder}
+              />
+            </div>}
           />
         </div>
         <PriceDetails
@@ -148,7 +198,7 @@ const CheckoutPage = (props) => {
           }), 0)}
         />
       </div>
-    </Layout>
+    </Layout >
   )
 }
 
