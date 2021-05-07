@@ -93,7 +93,8 @@ const CheckoutPage = (props) => {
       'addressId': selectedAddress._id,
       totalAmount: totalPrice,
       items: items,
-      paymentStatus: "pending"
+      paymentStatus: "pending",
+      paymentType: "cod"
     }
     console.log(payload)
     dispatch(addUserOrder(payload))
