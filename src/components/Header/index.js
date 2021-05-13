@@ -10,18 +10,25 @@ import {
   MaterialButton,
   MaterialDropdown
 } from '../MaterialUI';
-import { login, signout } from '../../actions';
+import { login, signout, signup } from '../../actions';
 
 
 const Header = (props) => {
 
   const [loginModal, setLoginModal] = useState(false);
   const [email, setEmail] = useState('');
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
   const [password, setPassword] = useState('');
+  const [signUp, setSignUp] = useState(false);
   const auth = useSelector(state => state.auth)
+  const cart = useSelector(state => state.cart)
   const dispatch = useDispatch()
 
   const userLogin = () => {
+    if (signUp) {
+      dispatch(signup({ email, password, firstName, lastName }))
+    }
     dispatch(login({ email, password }));
   }
 
@@ -30,6 +37,10 @@ const Header = (props) => {
     dispatch(signout());
   }
 
+  const setSigmupform = () => {
+    setSignUp(true)
+    setLoginModal(true)
+  }
   useEffect(() => {
     if (auth.authenticate) {
       setLoginModal(false)
@@ -55,7 +66,7 @@ const Header = (props) => {
         firstMenu={
           <div className="firstmenu">
             <span>New Customer?</span>
-            <a style={{ color: '#2874f0' }}>Sign Up</a>
+            <a style={{ color: '#2874f0' }} onClick={setSigmupform}>Sign Up</a>
           </div>
         }
       />
@@ -85,12 +96,14 @@ const Header = (props) => {
     />
   }
 
+  const numberOfCart = cart.cartItems ? Object.keys(cart.cartItems).length : 1
+  console.log(numberOfCart)
 
   return (
     <div className="header">
       <Modal
         visible={loginModal}
-        onClose={() => setLoginModal(false)}
+        onClose={() => { setLoginModal(false); setSignUp(false) }}
       >
         <div className="authContainer">
           <div className="row">
@@ -99,8 +112,20 @@ const Header = (props) => {
               <p>Get access to your Orders, Wishlist and Recommendations</p>
             </div>
             <div className="rightspace">
-
-
+              {signUp &&
+                <MaterialInput
+                  type="text"
+                  label="First Name"
+                  value={firstName}
+                  onChange={(e) => setEmail(e.target.value)}
+                />}
+              {signUp &&
+                <MaterialInput
+                  type="text"
+                  label="Last Name"
+                  value={lastName}
+                  onChange={(e) => setEmail(e.target.value)}
+                />}
               <MaterialInput
                 type="text"
                 label="Enter Email/Enter Mobile Number"
@@ -118,7 +143,7 @@ const Header = (props) => {
               <br />
               <br />
               <MaterialButton
-                title="Login"
+                title={signUp ? "Register" : "Login"}
                 bgColor="#fb641b"
                 textColor="#ffffff"
                 onClick={userLogin}
@@ -184,6 +209,7 @@ const Header = (props) => {
           />
           <div>
             <a className="cart" href="/cart">
+              {numberOfCart > 0 && <div className='cartNotification'>{numberOfCart}</div>}
               <IoIosCart />
               <span style={{ margin: '0 10px' }}>Cart</span>
             </a>

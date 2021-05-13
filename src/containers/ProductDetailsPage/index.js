@@ -11,7 +11,6 @@ import { BiRupee } from 'react-icons/bi';
 import { AiFillThunderbolt } from 'react-icons/ai';
 import { MaterialButton } from '../../components/MaterialUI';
 import './style.css';
-import { generatePublicUrl } from '../../urlConfig';
 import { addToCard } from '../../actions/cart.actions';
 
 
@@ -33,7 +32,7 @@ const ProductDetailsPage = (props) => {
   if (product.productDetails === null) {
     return null;
   }
-
+  console.log(product);
   return (
     <Layout>
       {/* <div>{product.productDetails.name}</div> */}
@@ -43,7 +42,7 @@ const ProductDetailsPage = (props) => {
             {
               product.productDetails.productPictures.map((thumb, index) =>
                 <div className="thumbnail">
-                  <img src={generatePublicUrl(thumb.img)} alt={thumb.img} />
+                  <img src={thumb.img} alt={thumb.img} />
                 </div>
               )
             }
@@ -56,7 +55,7 @@ const ProductDetailsPage = (props) => {
           </div>
           <div className="productDescContainer">
             <div className="productDescImgContainer">
-              <img src={generatePublicUrl(product.productDetails.productPictures[0].img)} alt={`${product.productDetails.productPictures[0].img}`} />
+              <img src={product.productDetails.productPictures[0].img} alt={`${product.productDetails.productPictures[0].img}`} />
             </div>
             <br />
             {/* action buttons */}

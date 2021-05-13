@@ -2,15 +2,12 @@ import { productConstants } from "../actions/constants"
 
 const initState = {
   products: [],
-  productsByPrice: {
-    under5k: [],
-    under10k: [],
-    under15k: [],
-    under20k: []
-  },
+  priceRange: {},
+  productsByPrice: {},
   pageRequest: false,
   page: {},
-  productDetails: null
+  productDetails: null,
+  loding: false
 }
 
 export default (state = initState, action) => {
@@ -19,6 +16,7 @@ export default (state = initState, action) => {
       state = {
         ...state,
         products: action.payload.products,
+        priceRange: action.payload.priceRange,
         productsByPrice: {
           ...action.payload.productByPrice
         }

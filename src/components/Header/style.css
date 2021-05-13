@@ -137,3 +137,12 @@ flex: 1;
 flex-direction: column;
 align-items: center;
 }
+.cartNotification {
+  font-size: 10px;
+  background: red;
+  padding: 2px 4px;
+  border-radius: 50%;
+  position: relative;
+  top: -9px;
+  left: 22px;
+}

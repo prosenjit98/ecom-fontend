@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { addToCard, getCartItem } from '../../actions/cart.actions'
+import { addToCard, getCartItem, removeCartItem } from '../../actions/cart.actions'
 import Layout from '../../components/Layout'
 import { MaterialButton } from '../../components/MaterialUI'
 import Card from '../../UI/Card'
@@ -35,6 +35,11 @@ const CartPage = (props) => {
     dispatch(addToCard({ _id, name: item.name, price: item.price, img: item.img }, -1))
   }
 
+  const handleRemoveItemClick = (_id) => {
+    const payload = { productId: _id }
+    dispatch(removeCartItem(payload))
+  }
+
   if (props.onlyProductCart) {
     return (
       <>
@@ -44,6 +49,7 @@ const CartPage = (props) => {
             cartItem={cartItems[key]}
             onQtyDec={onQtyDec}
             onQtyInc={onQtyInc}
+            handleRemoveItemClick={handleRemoveItemClick}
           />
         )}
       </>
@@ -63,6 +69,7 @@ const CartPage = (props) => {
               cartItem={cartItems[key]}
               onQtyDec={onQtyDec}
               onQtyInc={onQtyInc}
+              handleRemoveItemClick={handleRemoveItemClick}
             />
           )}
 

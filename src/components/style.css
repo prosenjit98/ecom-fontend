@@ -1,0 +1,14 @@
+.product_price {
+  font-size: 14px;
+  font-weight: bold;
+  margin: 5px 0;
+}
+.ratingCount{
+  display: inline-block;
+  background: #388e3c;
+  color: #fff;
+  font-weight: 400;
+  font-size: 12px;
+  border-radius: 3px;
+  padding: 2px 5px;
+}

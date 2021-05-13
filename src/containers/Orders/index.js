@@ -6,7 +6,6 @@ import { getOrder } from '../../actions';
 import Layout from '../../components/Layout'
 import { Bread } from '../../components/MaterialUI';
 import Card from '../../UI/Card';
-import { generatePublicUrl } from '../../urlConfig';
 import "./style.css"
 
 const Orders = (props) => {
@@ -32,7 +31,7 @@ const Orders = (props) => {
             <Card style={{ maxWidth: "1200px", margin: "5px auto" }}>
               <div className="orderItemsContainer flexRow">
                 <div className="orderImg">
-                  <img src={generatePublicUrl(item.productId.productPictures[0].img)} />
+                  <img src={item.productId.productPictures[0].img} />
                 </div>
                 <div className="orderItemsSubContainer">
                   <div style={{ width: 300 }}>{item.productId.name}</div>
